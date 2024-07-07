@@ -1,0 +1,151 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  --dark-main: #09090b;
+  --main-red: #e11d48;
+  --secondary-red: #f43f5e;
+  --main-light: #fff1f2;
+
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: var(--main-light);
+  background-color: var(--dark-main);
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+#root,
+#__next {
+  isolation: isolate;
+}
+
+body {
+  margin: 15px;
+}
+
+h1 {
+  text-align: center;
+  color: var(--main-red);
+}
+
+form.form {
+  max-width: 750px;
+}
+
+.form {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 20px auto;
+}
+
+.form-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.coordinates-l {
+  width: 100%;
+  margin-right: 5px;  
+}
+
+.coordinates-r {
+  width: 100%;
+  margin-left: 5px;  
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #2e2e2e;
+  color: #e0e0e0;
+  cursor: pointer;
+}
+
+.form-group input:focus {
+  outline: none;
+  box-shadow: 0 0 5px #007bff;
+}
+
+/* Nav Menu */
+
+.nav-coords {
+  display: block;
+}
+
+.nav-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.citySearch-nav, 
+.zipSearch-nav,
+.coordinateSearch-nav {
+  background-color: var(--main-red);
+  color: var(--main-light);
+  padding: 10px 20px;
+}
+
+.citySearch-nav {
+  border-radius: 8px 0 0 0;
+}
+.coordinateSearch-nav {
+  border-radius: 0 8px 0 0;
+}
+
+.citySearch-nav:hover, 
+.zipSearch-nav:hover,
+.coordinateSearch-nav:hover {
+  background-color: var(--secondary-red);
+  cursor: pointer;
+}
