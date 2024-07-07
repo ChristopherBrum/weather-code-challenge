@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
+const MAX_CITY_MATCHES = 15;
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -29,9 +31,12 @@ export const fetchCityMatches = (searchText) => {
   }
   const normalizedSearchText = searchText.trim().toLowerCase();
 
-  const matches = citiesData.filter((city) => {
+  let matches = citiesData.filter((city) => {
     return city.name.toLowerCase().startsWith(normalizedSearchText);
   });
 
+  if (matches.length > MAX_CITY_MATCHES) {
+    matches = matches.slice(0, MAX_CITY_MATCHES);
+  }
   return matches;
 };
