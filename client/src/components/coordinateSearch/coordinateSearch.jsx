@@ -11,6 +11,7 @@ const CoordinateSearch = () => {
 				<input
 					type="text"
 					id="longitude"
+					placeholder="Longitude..."
 					value={longitude}
 					onChange={(e) => setLongitude(e.target.value)}
 				/>
@@ -20,6 +21,7 @@ const CoordinateSearch = () => {
 				<input
 					type="text"
 					id="latitude"
+					placeholder="Latitude..."
 					value={latitude}
 					onChange={(e) => setLatitude(e.target.value)}
 				/>

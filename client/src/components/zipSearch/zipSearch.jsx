@@ -10,6 +10,7 @@ const ZipCodeSearch = () => {
         <input
           type="text"
           id="zipCode"
+          placeholder="Search..."
           value={zipCode}
           onChange={(e) => setZipCode(e.target.value)}
         />

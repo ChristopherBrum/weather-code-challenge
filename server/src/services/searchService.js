@@ -22,9 +22,11 @@ const initializeCityData = () => {
   }
 };
 
-initializeCityData();
 
 export const fetchCityMatches = (searchText) => {
+  
+  initializeCityData(); // Does this need to be here?
+
   if (!searchText || searchText.length === 0) {
     console.error("City data is not initialized");
     return [];

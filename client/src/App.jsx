@@ -4,7 +4,7 @@ import CitySearch from "./components/citySearch/citySearch";
 import ZipCodeSearch from "./components/zipSearch/zipSearch";
 import CoordinateSearch from "./components/coordinateSearch/coordinateSearch";
 
-function App() {
+const App = () => {
   const [navSelected, setNavSelected] = useState("citySearch");
 
   const handleNavClick = (e) => {
