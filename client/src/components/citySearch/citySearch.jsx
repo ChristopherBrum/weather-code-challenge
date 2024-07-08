@@ -1,48 +1,45 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import styles from "./citySearch.module.css";
-import WeatherDisplay from "../weatherDisplay/weatherDisplay";
+import { searchCityName, fetchWeatherData } from "../../services/api.js";
 
-const CitySearch = () => {
+const CitySearch = ({ setWeatherData }) => {
   const [prefix, setPrefix] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [weatherData, setWeatherData] = useState(null);
 
-  const url = "http://localhost:3000/api/v1/weather/";
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (prefix.length > 2) {
+        handleSearchCityName();
+      } else {
+        setSearchResults([]);
+      }
+    }, 300);
 
-  const searchCityName = async () => {
-    const response = await fetch(`${url}search?name=${prefix}`);
-    if (!response) {
-      console.log("Failed to fetch city names");
+    return () => clearTimeout(delayDebounceFn);
+  }, [prefix]);
+
+  const handleSearchCityName = async () => {
+    try {
+      const cityNamesList = await searchCityName(prefix);
+      setSearchResults(cityNamesList);
+    } catch (error) {
+      console.error(error.message);
+      setSearchResults([]);
     }
-    const cityNamesList = await response.json();
-    setSearchResults(cityNamesList);
+  };
+
+  const handleFetchWeather = async (city) => {
+    try {
+      const data = await fetchWeatherData(city);
+      setSearchResults([]);
+      setWeatherData(data);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   const handleDefault = () => {};
-
-  const handleFetchWeather = async (city) => {
-    const longitude = city.coord.lon;
-    const latitude = city.coord.lat;
-
-    const response = await fetch(`${url}city?lon=${longitude}&lat=${latitude}`);
-
-    if (!response) {
-      console.log("Failed to fetch city weather");
-    }
-
-    const data = await response.json();
-    console.log(data);
-    setSearchResults([]);
-    setWeatherData(data);
-  };
-
-  useEffect(() => {
-    if (prefix.length > 2) {
-      searchCityName();
-    } else {
-      setSearchResults([]);
-    }
-  }, [prefix]);
 
   return (
     <>
@@ -79,9 +76,12 @@ const CitySearch = () => {
             : null}
         </div>
       </form>
-      {weatherData ? <WeatherDisplay weatherData={weatherData} /> : null}
     </>
   );
+};
+
+CitySearch.propTypes = {
+  setWeatherData: PropTypes.func.isRequired,
 };
 
 export default CitySearch;

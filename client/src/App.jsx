@@ -1,12 +1,13 @@
 import { useState } from "react";
-import "./App.css";
 import logo from "/palmetto-logo.png";
 import CitySearch from "./components/citySearch/citySearch";
 import ZipCodeSearch from "./components/zipSearch/zipSearch";
 import CoordinateSearch from "./components/coordinateSearch/coordinateSearch";
+import WeatherDisplay from "./components/weatherDisplay/weatherDisplay";
 
 const App = () => {
   const [navSelected, setNavSelected] = useState("citySearch");
+  const [weatherData, setWeatherData] = useState(null);
 
   const handleNavClick = (e) => {
     setNavSelected(e.target.getAttribute("data-value"));
@@ -14,11 +15,11 @@ const App = () => {
 
   let componentToShow;
   if (navSelected === "citySearch") {
-    componentToShow = <CitySearch />;
+    componentToShow = <CitySearch setWeatherData={setWeatherData}/>;
   } else if (navSelected === "zipSearch") {
-    componentToShow = <ZipCodeSearch />;
+    componentToShow = <ZipCodeSearch setWeatherData={setWeatherData}/>;
   } else if (navSelected === "coordinateSearch") {
-    componentToShow = <CoordinateSearch />;
+    componentToShow = <CoordinateSearch setWeatherData={setWeatherData}/>;
   }
 
   return (
@@ -57,6 +58,7 @@ const App = () => {
         </div>
       </div>
       {componentToShow}
+      {weatherData ? <WeatherDisplay data={weatherData} /> : null}
     </>
   );
 };

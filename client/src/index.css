@@ -142,7 +142,7 @@ form.form {
 .zipSearch-nav,
 .coordinateSearch-nav {
   background-color: var(--med-green);
-  color: var(--palmetto-gray);
+  color: var(--dark-main);
   padding: 10px 20px;
 }
 
