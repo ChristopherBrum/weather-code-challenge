@@ -6,6 +6,7 @@ const fetchWeatherData = async (lon, lat) => {
     const url = new URL(apiUrl);
     url.searchParams.append("lon", lon);
     url.searchParams.append("lat", lat);
+    url.searchParams.append("units", "imperial");
     url.searchParams.append("appid", apiKey);
 
     const response = await fetch(url.toString());
