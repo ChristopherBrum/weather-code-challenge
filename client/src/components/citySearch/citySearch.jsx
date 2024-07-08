@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./citySearch.module.css";
-import { searchCityName, fetchWeatherData } from "../../services/api.js";
+import {
+  searchCityName,
+  fetchWeatherDataByCoords,
+} from "../../services/api.js";
 
 const CitySearch = ({ setWeatherData }) => {
   const [prefix, setPrefix] = useState("");
@@ -31,7 +34,7 @@ const CitySearch = ({ setWeatherData }) => {
 
   const handleFetchWeather = async (city) => {
     try {
-      const data = await fetchWeatherData(city);
+      const data = await fetchWeatherDataByCoords(city);
       setSearchResults([]);
       setWeatherData(data);
     } catch (error) {

@@ -9,13 +9,22 @@ export const searchCityName = async (prefix) => {
   return cityNamesList;
 };
 
-export const fetchWeatherData = async (city) => {
+export const fetchWeatherDataByCoords = async (city) => {
   const longitude = city.coord.lon;
   const latitude = city.coord.lat;
 
-  const response = await fetch(`${url}city?lon=${longitude}&lat=${latitude}`);
+  const response = await fetch(`${url}coords?lon=${longitude}&lat=${latitude}`);
   if (!response.ok) {
-    throw new Error("Failed to fetch city weather");
+    throw new Error("Failed to fetch city weather by coords");
+  }
+  const data = await response.json();
+  return data;
+};
+
+export const fetchWeatherDataByZip = async (zipCode) => {
+	const response = await fetch(`${url}zip?zip=${zipCode}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch city weather by zip");
   }
   const data = await response.json();
   return data;
