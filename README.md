@@ -15,7 +15,7 @@
 - **Backend**:
   - Node.js
   - Express
-	- Jest
+  - Jest
 
 - **APIs**:
   - OpenWeatherMap API
