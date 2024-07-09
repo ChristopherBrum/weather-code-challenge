@@ -1,7 +1,9 @@
-const url = "http://localhost:3000/api/v1/weather/";
+const apiUrl = "http://localhost:3000/api/v1/weather/";
 
 export const searchCityName = async (prefix) => {
-  const response = await fetch(`${url}search?name=${prefix}`);
+  const url = new URL(apiUrl + "search");
+  url.searchParams.append("name", prefix);
+  const response = await fetch(url.toString());
   if (!response.ok) {
     throw new Error("Failed to fetch city names");
   }
@@ -9,11 +11,13 @@ export const searchCityName = async (prefix) => {
   return cityNamesList;
 };
 
-export const fetchWeatherDataByCoords = async (city) => {
-  const longitude = city.coord.lon;
-  const latitude = city.coord.lat;
+export const fetchWeatherDataByCoords = async (longitude, latitude) => {
+  const url = new URL(apiUrl + "coords");
+  url.searchParams.append("lon", longitude);
+  url.searchParams.append("lat", latitude);
 
-  const response = await fetch(`${url}coords?lon=${longitude}&lat=${latitude}`);
+  const response = await fetch(url.toString());
+
   if (!response.ok) {
     throw new Error("Failed to fetch city weather by coords");
   }
@@ -22,7 +26,9 @@ export const fetchWeatherDataByCoords = async (city) => {
 };
 
 export const fetchWeatherDataByZip = async (zipCode) => {
-	const response = await fetch(`${url}zip?zip=${zipCode}`);
+  const url = new URL(apiUrl + "zip");
+  url.searchParams.append("zip", zipCode);
+  const response = await fetch(url.toString());
   if (!response.ok) {
     throw new Error("Failed to fetch city weather by zip");
   }

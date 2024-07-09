@@ -44,10 +44,9 @@ function WeatherDisplay({ data }) {
             </li>
           </ul>
         </div>
-        <div className={styles.forecast}>
+        {/* <div className={styles.forecast}>
           <h2 style={{"textAlign": "center"}}>5-Day Forecast</h2>
-          {/* Add forecast elements here */}
-        </div>
+        </div> */}
       </div>
     );
   }

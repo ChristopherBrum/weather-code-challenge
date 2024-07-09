@@ -12,7 +12,9 @@ const fetchWeatherDataByCoords = async (lon, lat) => {
     const response = await fetch(url.toString());
 
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      return {
+        palmettoMessage: "Coordinates are invalid",
+      };
     }
 
     const weatherData = await response.json();

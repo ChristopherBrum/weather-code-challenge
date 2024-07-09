@@ -140,7 +140,8 @@ form.form {
 
 .citySearch-nav, 
 .zipSearch-nav,
-.coordinateSearch-nav {
+.coordinateSearch-nav,
+.coords-submit {
   background-color: var(--med-green);
   color: var(--dark-main);
   padding: 10px 20px;
@@ -161,7 +162,8 @@ form.form {
 
 .citySearch-nav:hover, 
 .zipSearch-nav:hover,
-.coordinateSearch-nav:hover {
+.coordinateSearch-nav:hover,
+.coords-submit:hover {
   background-color: var(--light-green);
   cursor: pointer;
 }
@@ -169,3 +171,14 @@ form.form {
 .selected { 
   background-color: var(--light-green);
 }
+
+.coords-submit {
+  max-width: 450px;
+  text-align: center;
+  width: 100%;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+}
+

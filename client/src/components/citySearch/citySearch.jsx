@@ -34,7 +34,13 @@ const CitySearch = ({ setWeatherData }) => {
 
   const handleFetchWeather = async (city) => {
     try {
-      const data = await fetchWeatherDataByCoords(city);
+      if (!city.coord.lon) {
+        throw Error("Missing longitude value");
+      }
+      if (!city.coord.lat) {
+        throw Error("Missing latitude value");
+      }
+      const data = await fetchWeatherDataByCoords(city.coord.lon, city.coord.lat);
       setSearchResults([]);
       setWeatherData(data);
     } catch (error) {
