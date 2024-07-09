@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from 'url';
 
 const MAX_CITY_MATCHES = 25;
 
@@ -16,7 +16,6 @@ const initializeCityData = () => {
     try {
       const data = fs.readFileSync(pathToCityList, "utf8");
       citiesData = JSON.parse(data);
-      console.log("city-list initialized! # of cities: ", citiesData.length);
     } catch (error) {
       console.error("Error reading city list file:", error);
       citiesData = [];

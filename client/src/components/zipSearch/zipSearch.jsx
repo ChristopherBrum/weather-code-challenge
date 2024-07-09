@@ -8,8 +8,8 @@ const ZipCodeSearch = ({ setWeatherData }) => {
 
   useEffect(() => {
     if (zipCode.length === 5 && validZip) {
-      updateWeatherDisplay()
-    } 
+      updateWeatherDisplay();
+    }
     setValidZip(false);
   }, [validZip]);
 
@@ -20,7 +20,7 @@ const ZipCodeSearch = ({ setWeatherData }) => {
     } catch (error) {
       console.error("Failed to fetch weather data:", error);
     }
-  }
+  };
 
   const handleInput = async (e) => {
     if (invalidChar(e.target.value)) return;
@@ -43,7 +43,7 @@ const ZipCodeSearch = ({ setWeatherData }) => {
   return (
     <form className="form">
       <div className="form-group">
-        <label htmlFor="zipCode">Zip Code:</label>
+        <label htmlFor="zipCode">Zip Code (US only):</label>
         <input
           type="text"
           id="zipCode"

@@ -15,11 +15,11 @@ const App = () => {
 
   let componentToShow;
   if (navSelected === "citySearch") {
-    componentToShow = <CitySearch setWeatherData={setWeatherData}/>;
+    componentToShow = <CitySearch setWeatherData={setWeatherData} />;
   } else if (navSelected === "zipSearch") {
-    componentToShow = <ZipCodeSearch setWeatherData={setWeatherData}/>;
+    componentToShow = <ZipCodeSearch setWeatherData={setWeatherData} />;
   } else if (navSelected === "coordinateSearch") {
-    componentToShow = <CoordinateSearch setWeatherData={setWeatherData}/>;
+    componentToShow = <CoordinateSearch setWeatherData={setWeatherData} />;
   }
 
   return (

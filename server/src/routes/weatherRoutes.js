@@ -1,4 +1,7 @@
-import { fetchWeatherDataByCoords, fetchWeatherDataByZip } from "../services/weatherService.js";
+import {
+  fetchWeatherDataByCoords,
+  fetchWeatherDataByZip,
+} from "../services/weatherService.js";
 
 export const getWeatherByCoords = async (request, response) => {
   const longitude = request.query.lon;
@@ -23,20 +26,15 @@ export const getWeatherByCoords = async (request, response) => {
 export const getWeatherByZip = async (request, response) => {
   const zipCode = request.query.zip;
 
-  console.log(zipCode);
-
   try {
     if (!zipCode) {
       throw new Error("Invalid Zip Code");
     }
 
     const currentWeather = await fetchWeatherDataByZip(zipCode);
-
-    console.log("currentWeather:", currentWeather)
     response.send(currentWeather);
   } catch (error) {
     console.error("Error fetching weather data:", error);
     response.status(500).send("Error fetching weather data");
   }
 };
-

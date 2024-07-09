@@ -74,8 +74,68 @@ body {
   display: flex;
 }
 
+/* Nav Menu */
+
+.nav-coords {
+  display: block;
+}
+
+.nav-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid var(--med-green);
+}
+
+.citySearch-nav,
+.zipSearch-nav,
+.coordinateSearch-nav,
+.coords-submit {
+  background-color: var(--med-green);
+  color: var(--dark-main);
+  padding: 10px 20px;
+}
+
+.citySearch-nav {
+  border-radius: 8px 0 0 0;
+}
+
+.zipSearch-nav {
+  border-left: var(--dark-green) 1px solid;
+  border-right: var(--dark-green) 1px solid;
+}
+
+.coordinateSearch-nav {
+  border-radius: 0 8px 0 0;
+}
+
+.citySearch-nav:hover,
+.zipSearch-nav:hover,
+.coordinateSearch-nav:hover,
+.coords-submit:hover {
+  background-color: var(--light-green);
+  cursor: pointer;
+}
+
+.selected {
+  background-color: var(--light-green);
+}
+
+.coords-submit {
+  max-width: 450px;
+  text-align: center;
+  width: 100%;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+}
+
+/* Forms */
+
 form.form {
   max-width: 750px;
+  margin-top: 20px;
 }
 
 .form {
@@ -92,12 +152,12 @@ form.form {
 
 .coordinates-l {
   width: 100%;
-  margin-right: 5px;  
+  margin-right: 5px;
 }
 
 .coordinates-r {
   width: 100%;
-  margin-left: 5px;  
+  margin-left: 5px;
 }
 
 .form-group {
@@ -124,61 +184,3 @@ form.form {
   outline: none;
   box-shadow: 0 0 5px #007bff;
 }
-
-/* Nav Menu */
-
-.nav-coords {
-  display: block;
-}
-
-.nav-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid var(--med-green);
-}
-
-.citySearch-nav, 
-.zipSearch-nav,
-.coordinateSearch-nav,
-.coords-submit {
-  background-color: var(--med-green);
-  color: var(--dark-main);
-  padding: 10px 20px;
-}
-
-.citySearch-nav {
-  border-radius: 8px 0 0 0;
-}
-
-.zipSearch-nav {
-  border-left: var(--dark-green) 1px solid;
-  border-right: var(--dark-green) 1px solid;
-}
-
-.coordinateSearch-nav {
-  border-radius: 0 8px 0 0;
-}
-
-.citySearch-nav:hover, 
-.zipSearch-nav:hover,
-.coordinateSearch-nav:hover,
-.coords-submit:hover {
-  background-color: var(--light-green);
-  cursor: pointer;
-}
-
-.selected { 
-  background-color: var(--light-green);
-}
-
-.coords-submit {
-  max-width: 450px;
-  text-align: center;
-  width: 100%;
-  margin-top: 15px;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8px;
-}
-
