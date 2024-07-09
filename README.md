@@ -50,7 +50,7 @@ npm install
 
 3. Set up environment variables:
 
-Create an `.env` file in the root of the the server directory and add this code (I can send an API if needed):
+Create an `.env` file in the root of the the `server` directory and add this code (API Key = `f35a0cc9cc6ba219265fb27e3d1d1eb4`):
 
 ```bash .env
 OPEN_WEATHER_API_KEY=openweatherAPI_key
@@ -72,10 +72,24 @@ cd ../client
 npm run dev
 ```
 
-Access the application:
+6. Access the application:
 
 Open your browser and go to `http://localhost:5173` to see the application in action.
 
+There are 3 different search options:
+- Search by city name.
+- Search by zip code (US only).
+- Search by coordinates (longitude and lattitude)
+
+Here are some coordinates you can use:
+
+| Longitude | Latitude |
+|---|---|
+| 5.12658 | 46.248489 |
+| -64.833328 | -25.91667 |
+| 107.873482 | 34.3605 |
+
+For additional valid coordinates, check the `server/data/city-list.json` file. 
 
 ## Project Structure
 
