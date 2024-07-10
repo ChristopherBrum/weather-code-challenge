@@ -1,26 +1,29 @@
-import fs from "fs";
 import path from "path";
 import { fileURLToPath } from 'url';
+import { readFileSync } from "fs";
 
 const MAX_CITY_MATCHES = 25;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const pathToCityList = path.resolve(__dirname, "../../data/city-list.json");
 
-let citiesData;
+export let citiesData;
 
-const initializeCityData = () => {
+export const initializeCityData = (customReadFile = readFileSync) => {
   if (!citiesData) {
     try {
-      const data = fs.readFileSync(pathToCityList, "utf8");
+      const data = readFileSync(pathToCityList, "utf8");
       citiesData = JSON.parse(data);
     } catch (error) {
       console.error("Error reading city list file:", error);
       citiesData = [];
     }
   }
+};
+
+export const resetCitiesData = () => {
+  citiesData = null;
 };
 
 export const fetchCityMatches = (searchText) => {

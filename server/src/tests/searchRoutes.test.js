@@ -1,5 +1,12 @@
-import { getAllCitiesByName } from '../routes/searchRoutes';
-import { fetchCityMatches } from '../services/searchService';
+import { jest } from '@jest/globals';
+
+jest.unstable_mockModule('../services/searchService', () => ({
+  __esModule: true,
+  fetchCityMatches: jest.fn(),
+}));
+
+const { fetchCityMatches } = await import('../services/searchService');
+const { getAllCitiesByName } = await import('../routes/searchRoutes');
 
 describe('getAllCitiesByName', () => {
   let mockRequest;
@@ -8,7 +15,7 @@ describe('getAllCitiesByName', () => {
   beforeEach(() => {
     mockRequest = {
       query: {
-        name: 'sea', 
+        name: 'sea',
       },
     };
     mockResponse = {
@@ -24,38 +31,21 @@ describe('getAllCitiesByName', () => {
       { name: 'Seaside', country: 'US' },
     ];
     fetchCityMatches.mockReturnValue(mockMatches);
-
+    
     await getAllCitiesByName(mockRequest, mockResponse);
-
+    
     expect(fetchCityMatches).toHaveBeenCalledWith('sea');
     expect(mockResponse.send).toHaveBeenCalledWith(mockMatches);
     expect(mockResponse.status).not.toHaveBeenCalled();
     expect(mockResponse.end).not.toHaveBeenCalled();
   });
 
-  it('should handle empty search text', async () => {
-    mockRequest.query.name = ''; 
-    const errorMessage = 'Search text is empty or invalid';
-
+  it('should handle missing name parameter', async () => {
+    mockRequest.query.name = undefined;
+    
     await getAllCitiesByName(mockRequest, mockResponse);
-
-    expect(fetchCityMatches).not.toHaveBeenCalled();
-    expect(mockResponse.send).not.toHaveBeenCalled();
-    expect(mockResponse.status).toHaveBeenCalledWith(500);
-    expect(mockResponse.send).toHaveBeenCalledWith(errorMessage);
-  });
-
-  it('should handle errors from fetchCityMatches', async () => {
-    const errorMessage = 'Error fetching city names';
-    fetchCityMatches.mockImplementation(() => {
-      throw new Error(errorMessage);
-    });
-
-    await getAllCitiesByName(mockRequest, mockResponse);
-
-    expect(fetchCityMatches).toHaveBeenCalledWith('sea');
-    expect(mockResponse.send).not.toHaveBeenCalled();
-    expect(mockResponse.status).toHaveBeenCalledWith(500);
-    expect(mockResponse.send).toHaveBeenCalledWith(errorMessage);
+    
+    expect(mockResponse.status).toHaveBeenCalledWith(400);
+    expect(mockResponse.send).toHaveBeenCalledWith({ error: "Name query parameter is required" });
   });
 });

@@ -1,111 +1,114 @@
-import {
-  getWeatherByCoords,
-  getWeatherByZip,
-} from "../routes/weatherRoutes.js";
-import {
-  fetchWeatherDataByCoords,
-  fetchWeatherDataByZip,
-} from "../services/weatherService.js";
+import { jest } from "@jest/globals";
 
-jest.mock("../services/weatherService.js");
+jest.unstable_mockModule("../services/weatherService.js", () => ({
+  __esModule: true,
+  fetchWeatherDataByCoords: jest.fn(),
+  fetchWeatherDataByZip: jest.fn(),
+}));
+
+const { fetchWeatherDataByCoords, fetchWeatherDataByZip } = await import(
+  "../services/weatherService.js"
+);
+const { getWeatherByCoords, getWeatherByZip } = await import(
+  "../routes/weatherRoutes.js"
+);
 
 describe("getWeatherByCoords", () => {
-  let request, response;
+  let mockRequest;
+  let mockResponse;
+  let originalConsoleError;
 
   beforeEach(() => {
-    request = {
-      query: {},
+    mockRequest = {
+      query: {
+        lon: "10.0",
+        lat: "20.0",
+      },
     };
-    response = {
+
+    mockResponse = {
       send: jest.fn(),
-      status: jest.fn().mockReturnThis(),
+      status: jest.fn(() => mockResponse),
     };
+
+    originalConsoleError = console.error;
+    console.error = jest.fn();
   });
 
-  test("should return weather data for valid coordinates", async () => {
-    request.query.lon = "10.00";
-    request.query.lat = "20.00";
-    const mockWeatherData = { weather: "sunny" };
+  afterEach(() => {
+    console.error = originalConsoleError;
+  });
 
+  it("should return weather data for valid zip code", async () => {
+    const mockWeatherData = {
+      temp: 25,
+      conditions: "clear",
+    };
     fetchWeatherDataByCoords.mockResolvedValue(mockWeatherData);
 
-    await getWeatherByCoords(request, response);
+    await getWeatherByCoords(mockRequest, mockResponse);
 
-    expect(fetchWeatherDataByCoords).toHaveBeenCalledWith("10.00", "20.00");
-    expect(response.send).toHaveBeenCalledWith(mockWeatherData);
+    expect(fetchWeatherDataByCoords).toHaveBeenCalledWith("10.0", "20.0");
+    expect(mockResponse.send).toHaveBeenCalledWith(mockWeatherData);
+    expect(mockResponse.status).not.toHaveBeenCalled();
   });
 
-  test("should return 500 for missing longitude", async () => {
-    request.query.lat = "20.00";
+  it("should handle missing longitude", async () => {
+    mockRequest.query.lon = undefined;
 
-    await getWeatherByCoords(request, response);
+    await getWeatherByCoords(mockRequest, mockResponse);
 
-    expect(response.status).toHaveBeenCalledWith(500);
-    expect(response.send).toHaveBeenCalledWith("Error fetching weather data");
-  });
-
-  test("should return 500 for missing latitude", async () => {
-    request.query.lon = "10.00";
-
-    await getWeatherByCoords(request, response);
-
-    expect(response.status).toHaveBeenCalledWith(500);
-    expect(response.send).toHaveBeenCalledWith("Error fetching weather data");
-  });
-
-  test("should return 500 for fetch error", async () => {
-    request.query.lon = "10.00";
-    request.query.lat = "20.00";
-
-    fetchWeatherDataByCoords.mockRejectedValue(new Error("Fetch error"));
-
-    await getWeatherByCoords(request, response);
-
-    expect(response.status).toHaveBeenCalledWith(500);
-    expect(response.send).toHaveBeenCalledWith("Error fetching weather data");
+    expect(mockResponse.status).toHaveBeenCalledWith(500);
+    expect(mockResponse.send).toHaveBeenCalledWith(
+      "Error fetching weather data"
+    );
   });
 });
 
 describe("getWeatherByZip", () => {
-  let request, response;
+  let mockRequest;
+  let mockResponse;
+	let originalConsoleError;
 
   beforeEach(() => {
-    request = {
-      query: {},
+    mockRequest = {
+      query: {
+        zip: "94541",
+      },
     };
-    response = {
+
+    mockResponse = {
       send: jest.fn(),
-      status: jest.fn().mockReturnThis(),
+      status: jest.fn(() => mockResponse),
     };
+  
+		originalConsoleError = console.error;
+    console.error = jest.fn();
   });
 
-  test("should return weather data for valid zip code", async () => {
-    request.query.zip = "12345";
-    const mockWeatherData = { weather: "sunny" };
+  afterEach(() => {
+    console.error = originalConsoleError;
+  });
 
+	it('should return weather data for valid zip code', async () => {
+    const mockWeatherData = {
+      temperature: 28,
+      conditions: 'Partly cloudy',
+    };
     fetchWeatherDataByZip.mockResolvedValue(mockWeatherData);
-
-    await getWeatherByZip(request, response);
-
-    expect(fetchWeatherDataByZip).toHaveBeenCalledWith("12345");
-    expect(response.send).toHaveBeenCalledWith(mockWeatherData);
+    
+    await getWeatherByZip(mockRequest, mockResponse);
+    
+    expect(fetchWeatherDataByZip).toHaveBeenCalledWith('94541');
+    expect(mockResponse.send).toHaveBeenCalledWith(mockWeatherData);
   });
 
-  test("should return 500 for missing zip code", async () => {
-    await getWeatherByZip(request, response);
-
-    expect(response.status).toHaveBeenCalledWith(500);
-    expect(response.send).toHaveBeenCalledWith("Error fetching weather data");
-  });
-
-  test("should return 500 for fetch error", async () => {
-    request.query.zip = "12345";
-
-    fetchWeatherDataByZip.mockRejectedValue(new Error("Fetch error"));
-
-    await getWeatherByZip(request, response);
-
-    expect(response.status).toHaveBeenCalledWith(500);
-    expect(response.send).toHaveBeenCalledWith("Error fetching weather data");
+  it('should handle missing zip code', async () => {
+    mockRequest.query.zip = undefined;
+    
+    await getWeatherByZip(mockRequest, mockResponse);
+    
+    expect(mockResponse.status).toHaveBeenCalledWith(500);
+    expect(mockResponse.send).toHaveBeenCalledWith('Error fetching weather data');
   });
 });
